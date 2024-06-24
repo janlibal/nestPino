@@ -11,10 +11,6 @@ import { LoggerMiddleware } from 'src/middleware/logger.middleware'
 import { v4 as uuidv4 } from 'uuid'
 import { LoggerModule } from 'nestjs-pino'
 
-
-
-
-
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -46,7 +42,7 @@ import { LoggerModule } from 'nestjs-pino'
         return {
           pinoHttp: {
             customProps: (req, res) => ({
-              context: 'HTTP'
+              context: 'HTTP',
             }),
             transport: {
               target: 'pino-pretty',
@@ -54,13 +50,14 @@ import { LoggerModule } from 'nestjs-pino'
                 colorize: true,
                 levelFirst: true,
                 translateTime: 'UTC:mm/dd/yyyy, h:MM:ss TT Z',
-                singleLine: true
-              }
+                singleLine: true,
+              },
             },
             level: 'info', //config.get('LOG_LEVEL'), // Or any other config value
-            genReqId: (request) => request.headers['x-correlation-id'] || uuidv4(),
+            genReqId: (request) =>
+              request.headers['x-correlation-id'] || uuidv4(),
           },
-        };
+        }
       },
     }),
     //LoggerModule.forRoot({ pinoHttp: { level: 'info' } }),

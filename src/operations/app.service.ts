@@ -5,11 +5,14 @@ import { Logger } from 'nestjs-pino'
 
 @Injectable()
 export class AppService {
-  constructor(private readonly appRepository: AppRepository, private readonly logger: Logger) {}
+  constructor(
+    private readonly appRepository: AppRepository,
+    private readonly logger: Logger,
+  ) {}
   public async compileData() {
     this.logger.log('Stareted to retrieve data')
     const env = await this.appRepository.getEnv()
-    if(!env){
+    if (!env) {
       this.logger.fatal('Fatal env issue!')
     }
     const data = {
